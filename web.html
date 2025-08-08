@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CDM - Estacionamiento Inteligente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2e577d;
+            --primary-dark: #4ab4c2;
+            --secondary: #ffa000;
+            --dark: #263238;
+            --light: #f5f5f5;
+            --gray: #78909c;
+            --danger: #d32f2f;
+            --success: #54c24a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+           background-image: linear-gradient(to right top, #43f0df, #79f3ff, #baf4ff, #e9f6ff, #ffffff);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .custom-logo {
+            height: 75px;
+            margin-right: 15px;
+            border-radius: 8px;
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo-text span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(71, 216, 221, 0.9) 0%, rgba(239, 241, 113, 0.9) 100%), url('https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3') no-repeat center center/cover;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        
+        /* Features */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            background-color: var(--primary);
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-icon i {
+            font-size: 3rem;
+            color: white;
+        }
+        
+        .feature-content {
+            padding: 30px;
+        }
+        
+        .feature-content h3 {
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+        
+        /* Availability */
+        .availability {
+            background-color: white;
+        }
+        
+        .map-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .map-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .parking-map {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--light);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .parking-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .parking-space {
+            height: 60px;
+            background-color: var(--success);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .parking-space.occupied {
+            background-color: var(--danger);
+        }
+        
+        .parking-space.selected {
+            background-color: var(--secondary);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255,160,0,0.4);
+        }
+        
+        .parking-space i {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        
+        .available-color {
+            background-color: var(--success);
+        }
+        
+        .occupied-color {
+            background-color: var(--danger);
+        }
+        
+        .selected-color {
+            background-color: var(--secondary);
+        }
+        
+        .reservation-form {
+            background-color: var(--light);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        /* Pricing */
+        .pricing-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .pricing-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 30px;
+        }
+        
+        .pricing-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+        
+        .pricing-features {
+            padding: 30px;
+            list-style: none;
+        }
+        
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-footer {
+            padding: 0 30px 30px;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            background-color: white;
+        }
+        
+        .testimonial-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .testimonial {
+            background-color: var(--light);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px;
+            position: relative;
+        }
+        
+        .testimonial:before {
+            content: """;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--primary);
+            opacity: 0.1;
+            font-family: serif;
+            line-height: 1;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--gray);
+            margin-right: 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 5px;
+        }
+        
+        .author-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+            
+            .nav-links {
+                margin-top: 20px;
+            }
+            
+            .nav-links li {
+                margin: 0 15px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .parking-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 5px 10px;
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .parking-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .logo-text {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <!-- Logo personalizado de CDM -->
+                    <img src="Logo de empresa.png" alt="CDM Estacionamiento Inteligente" class="custom-logo">
+                
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#disponibilidad">Disponibilidad</a></li>
+                    <li><a href="#precios">Precios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+                <a href="#reservar" class="btn">Reservar Ahora</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <h1>Estacionamiento Inteligente para la Ciudad Moderna</h1>
+            <p>Encuentra, reserva y paga tu espacio de estacionamiento en segundos con nuestra tecnología avanzada.</p>
+            <a href="#disponibilidad" class="btn">Ver Disponibilidad</a>
+            <a href="#precios" class="btn btn-outline">Ver Tarifas</a>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section" id="servicios">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestras Características Inteligentes</h2>
+                <p>Descubre cómo nuestra tecnología hace que estacionar sea más fácil, rápido y eficiente.</p>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sensor"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Sensores Inteligentes</h3>
+                        <p>Monitoreo en tiempo real de la disponibilidad de espacios mediante sensores IoT de última generación.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Reserva desde tu Móvil</h3>
+                        <p>Reserva tu espacio con antelación desde nuestra aplicación móvil o página web.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Guía Interior</h3>
+                        <p>Sistema de luces LED que te guía directamente a tu espacio reservado.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Pago sin Contacto</h3>
+                        <p>Paga automáticamente al salir sin necesidad de detenerte en cajas.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Carga para Vehículos Eléctricos</h3>
+                        <p>Espacios equipados con cargadores rápidos para vehículos eléctricos.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Seguridad 24/7</h3>
+                        <p>Vigilancia con cámaras de alta definición y personal de seguridad las 24 horas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Availability -->
+    <section class="section availability" id="disponibilidad">
+        <div class="container">
+            <div class="section-title">
+                <h2>Disponibilidad en Tiempo Real</h2>
+                <p>Selecciona tu espacio de estacionamiento y reserva en segundos</p>
+            </div>
+            <div class="map-container">
+                <div class="map-info">
+                    <h3>Estado Actual del Estacionamiento</h3>
+                    <p>Nuestro sistema de sensores actualiza la disponibilidad cada 30 segundos. Los espacios verdes están disponibles, los rojos están ocupados.</p>
+                    <p><strong>Espacios disponibles:</strong> <span id="available-spaces">42</span> de 120</p>
+                    
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-color available-color"></div>
+                            <span>Disponible</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color occupied-color"></div>
+                            <span>Ocupado</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color selected-color"></div>
+                            <span>Seleccionado</span>
+                        </div>
+                    </div>
+                    
+                    <div class="reservation-form" id="reservar">
+                        <h3>Reservar Espacio</h3>
+                        <div class="form-group">
+                            <label for="space-number">Espacio Seleccionado</label>
+                            <input type="text" id="space-number" placeholder="A-15" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="reservation-date">Fecha</label>
+                            <input type="date" id="reservation-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="reservation-time">Hora de Entrada</label>
+                            <input type="time" id="reservation-time">
+                        </div>
+                        <div class="form-group">
+                            <label for="duration">Duración</label>
+                            <select id="duration">
+                                <option value="1">1 hora</option>
+                                <option value="2">2 horas</option>
+                                <option value="3">3 horas</option>
+                                <option value="4">4 horas</option>
+                                <option value="8">8 horas (día completo)</option>
+                            </select>
+                        </div>
+                        <button class="btn" id="reserve-btn">Reservar Ahora</button>
+                    </div>
+                </div>
+                <div class="parking-map">
+                    <h3>Planta Baja - Sector A</h3>
+                    <div class="parking-grid" id="parking-grid">
+                        <!-- Espacios generados por JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="section" id="precios">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tarifas Transparentes</h2>
+                <p>Elige el plan que mejor se adapte a tus necesidades de estacionamiento</p>
+            </div>
+            <div class="pricing-plans">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Ocasional</h3>
+                        <div class="price">$3.50 <span>/hora</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Tarifa por hora</li>
+                        <li>Sin reserva previa</li>
+                        <li>Acceso a todos los niveles</li>
+                        <li>Pago al salir</li>
+                        <li>Soporte básico</li>
+                    </ul>
+                    <div class="pricing-footer">
+                        <a href="#" class="btn btn-outline">Estacionar Ahora</a>
+                    </div>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header" style="background-color: var(--secondary);">
+                        <h3>Frecuente</h3>
+                        <div class="price">$2.90 <span>/hora</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Tarifa reducida por hora</li>
+                        <li>Reserva con 1 hora de anticipación</li>
+                        <li>Espacios preferenciales</li>
+                        <li>10% descuento en recargas EV</li>
+                        <li>Soporte prioritario</li>
+                    </ul>
+                    <div class="pricing-footer">
+                        <a href="#" class="btn">Registrarse</a>
+                    </div>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Premium</h3>
+                        <div class="price">$220 <span>/mes</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Espacio reservado exclusivo</li>
+                        <li>Acceso ilimitado 24/7</li>
+                        <li>Carga EV gratuita</li>
+                        <li>Lavado mensual incluido</li>
+                        <li>Soporte VIP 24/7</li>
+                    </ul>
+                    <div class="pricing-footer">
+                        <a href="#" class="btn btn-outline">Solicitar Info</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Lo que Dicen Nuestros Clientes</h2>
+                <p>Experiencias reales de usuarios que han transformado su forma de estacionar</p>
+            </div>
+            <div class="testimonial-container">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>Desde que descubrí CDM, estacionar en el centro de la ciudad dejó de ser un dolor de cabeza. Reservo mi espacio mientras voy en el auto y al llegar tengo mi lugar asegurado con luces que me guían directamente. ¡Increíble!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            LM
+                        </div>
+                        <div class="author-info">
+                            <h4>Laura Martínez</h4>
+                            <p>Usuario Premium - 2 años</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>Como repartidor, el tiempo es oro. CDM me permite encontrar espacios rápidamente cerca de mis puntos de entrega. El sistema de pago automático me ahorra minutos valiosos cada día. ¡Muy recomendado para profesionales!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            CR
+                        </div>
+                        <div class="author-info">
+                            <h4>Carlos Rodríguez</h4>
+                            <p>Usuario Frecuente - 8 meses</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        <p>Guido se la come</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            JM
+                        </div>
+                        <div class="author-info">
+                            <h4>John Sebastian Misaraimi </h4>
+                            <p>Usuario Premium - 20 años</p>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacto">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CDM Estacionamientos</h3>
+                    <p>Revolucionando la experiencia de estacionamiento con tecnología inteligente para ciudades modernas.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#disponibilidad">Disponibilidad</a></li>
+                        <li><a href="#precios">Precios</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Horarios</h3>
+                    <ul class="footer-links">
+                        <li>Lunes a Viernes: 6:00 AM - 12:00 AM</li>
+                        <li>Sábados: 7:00 AM - 2:00 AM</li>
+                        <li>Domingos: 8:00 AM - 10:00 PM</li>
+                        <li>Festivos: 8:00 AM - 10:00 PM</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Av. Tecnológico 123, Ciudad Inteligente</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@cdm-estacionamientos.com</li>
+                        <li><i class="fas fa-headset"></i> Soporte 24/7: soporte@cdm.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 CDM Estacionamientos Inteligentes. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Generar espacios de estacionamiento
+        const parkingGrid = document.getElementById('parking-grid');
+        const availableSpacesElement = document.getElementById('available-spaces');
+        const spaceNumberInput = document.getElementById('space-number');
+        const reserveBtn = document.getElementById('reserve-btn');
+        
+        // Estado inicial - 42 espacios disponibles de 120
+        let availableSpaces = 42;
+        let selectedSpace = null;
+        
+        // Actualizar contador de espacios
+        function updateAvailableSpaces() {
+            availableSpacesElement.textContent = availableSpaces;
+        }
+        
+        // Crear espacios de estacionamiento
+        for (let i = 1; i <= 30; i++) {
+            const space = document.createElement('div');
+            space.className = 'parking-space';
+            space.textContent = `A-${i}`;
+            
+            // Aleatoriamente marcar algunos espacios como ocupados (30% de probabilidad)
+            if (Math.random() < 0.3) {
+                space.classList.add('occupied');
+            } else {
+                // Agregar icono de EV a algunos espacios disponibles (20% de probabilidad)
+                if (Math.random() < 0.2) {
+                    space.innerHTML += '<i class="fas fa-bolt"></i>';
+                }
+            }
+            
+            // Manejar selección de espacio
+            space.addEventListener('click', function() {
+                if (this.classList.contains('occupied')) {
+                    alert('Este espacio está actualmente ocupado. Por favor selecciona otro.');
+                    return;
+                }
+                
+                // Deseleccionar espacio previo
+                if (selectedSpace) {
+                    selectedSpace.classList.remove('selected');
+                }
+                
+                // Seleccionar nuevo espacio
+                this.classList.add('selected');
+                selectedSpace = this;
+                spaceNumberInput.value = this.textContent;
+            });
+            
+            parkingGrid.appendChild(space);
+        }
+        
+        // Actualizar contador inicial
+        updateAvailableSpaces();
+        
+        // Manejar reserva
+        reserveBtn.addEventListener('click', function() {
+            const date = document.getElementById('reservation-date').value;
+            const time = document.getElementById('reservation-time').value;
+            const duration = document.getElementById('duration').value;
+            
+            if (!selectedSpace) {
+                alert('Por favor selecciona un espacio de estacionamiento.');
+                return;
+            }
+            
+            if (!date || !time) {
+                alert('Por favor completa la fecha y hora de tu reserva.');
+                return;
+            }
+            
+            // Simular reserva exitosa
+            alert(`¡Reserva confirmada en CDM!\n\nEspacio: ${spaceNumberInput.value}\nFecha: ${date}\nHora: ${time}\nDuración: ${duration} horas`);
+            
+            // Actualizar disponibilidad
+            selectedSpace.classList.remove('selected');
+            selectedSpace.classList.add('occupied');
+            availableSpaces--;
+            updateAvailableSpaces();
+            
+            // Reiniciar formulario
+            spaceNumberInput.value = '';
+            document.getElementById('reservation-date').value = '';
+            document.getElementById('reservation-time').value = '';
+            document.getElementById('duration').value = '1';
+            selectedSpace = null;
+        });
+        
+        // Fecha mínima para reserva (hoy)
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('reservation-date').min = today;
+        
+        // Actualizar hora actual como valor por defecto
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        document.getElementById('reservation-time').value = `${hours}:${minutes}`;
+    </script>
+</body>
+</html>
